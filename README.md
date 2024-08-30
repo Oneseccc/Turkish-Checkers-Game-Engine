@@ -39,7 +39,7 @@ board.jpg | is the image for game board.
 
 train_x.npy, train_y.np, test_x.npy, test_y.npy | contains randomly generated dataset.
 
-x_data2.npy, y_data2.npy | contains the self-play first hybrid solution against alpha-beta dataset.
+x_data2.npy, y_data2.npy | contains the self-play first hybrid solution against alpha-beta dataset, which is located in the self-play-dataset.zip.
 
 random_model.keras | is the trained CNN with random data.
 
