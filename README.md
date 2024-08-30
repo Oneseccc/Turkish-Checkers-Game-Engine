@@ -17,6 +17,7 @@ It is only used as starting point but major changes are made to be able to imple
 
 
 ==========================================================================
+
 This repo contains many files, each file having different parts of the thesis covered, for example: 
 
 neural_network_updated_working.py | is for the developed engine against human player, which is the most basic version that humans can interact with.
