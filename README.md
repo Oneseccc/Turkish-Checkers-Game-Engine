@@ -1,5 +1,6 @@
 Turkish Checkers Game Engine Developed for Bachelors Thesis.
 
+==========================================================================
 
 Minor parts are taken for this bachelor thesis project and accordingly changes are made to be able to make it work for Turkish Checkers game. All of the AI related codes are developed and implemented by me and nothing is taken, only the GUI and some game environment related parts are taken/changed.
 
