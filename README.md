@@ -37,9 +37,9 @@ generate_random_training_data.py | is the file generates random training data an
 
 board.jpg | is the image for game board.
 
-train_x.npy, train_y.np, test_x.npy, test_y.npy | contains randomly generated dataset.
+train_x.npy, train_y.np, test_x.npy, test_y.npy | contains randomly generated dataset, in the dataset.zip.
 
-x_data2.npy, y_data2.npy | contains the self-play first hybrid solution against alpha-beta dataset, which is located in the self-play-dataset.zip.
+x_data2.npy, y_data2.npy | contains the self-play first hybrid solution against alpha-beta dataset, which is located in the dataset.zip.
 
 random_model.keras | is the trained CNN with random data.
 
