@@ -1,7 +1,6 @@
 # neuralnetwork-updated.py
 import os
 from typing import Optional
-
 import keras
 import pygame, sys
 from pygame.locals import *
@@ -11,12 +10,11 @@ from tensorflow.keras.models import load_model
 
 pygame.font.init()
 
-
 ##COLORS##
 #             R    G    B
 WHITE = (255, 255, 255)
-BEIGE = (210, 181, 159)
-BROWN = (39, 38, 35)
+BEIGE = (210, 181, 159) # this is white pieces, but it called beige in the code.
+BROWN = (39, 38, 35)  # this is black pieces, but it called brown in the code.
 BLACK = (39, 38, 35)
 GOLD = (255, 210, 0)
 HIGH = (140, 180, 140)
@@ -28,7 +26,7 @@ right = "right"
 up = "up"
 down = "down"
 
-MODEL: keras.Model = load_model('random_model.keras', compile=False)
+MODEL: keras.Model = load_model('random_model.keras', compile=False)  #random generated dataset is loaded here
 
 class Game:
     """
@@ -40,7 +38,7 @@ class Game:
         self.board = Board()
         self.turn = BEIGE
         self.selected_piece = None  # a board location.
-        self.hop = False
+        self.hop = False  # multiple captures
         self.selected_legal_moves = []
         self.board_history = []  # x
         self.move_score_history = []  # y
@@ -70,7 +68,7 @@ class Game:
             self.selected_legal_moves = self.board.legal_moves(self.selected_piece, self.hop)
 
         if self.turn == BROWN:
-            # AI player's turn
+            # AI player's turn ( for human vs AI, brown is the AI)
 
             move = self.ai_move(self.hop)
             if move is None:
@@ -92,7 +90,7 @@ class Game:
             self.add_to_history(move)  # Record the game history after the AI move
 
         else:
-            # Human player's turn
+            # Human player's turn  (white piece)
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.terminate_game()
@@ -164,11 +162,11 @@ class Game:
 
         if brown_pieces == 0 or (beige_pieces > 0 and not brown_has_moves):
             self.show_popup("Beige Wins!")
-            self.save_game_history('train_x.npy', 'train_y.npy')  # Save game history to training data
+            self.save_game_history('train_x.npy', 'train_y.npy')  # overwrite save game history to training data
             return True
         elif beige_pieces == 0 or (brown_pieces > 0 and not beige_has_moves):
             self.show_popup("Black Wins!")
-            self.save_game_history('train_x.npy', 'train_y.npy')  # Save game history to training data
+            self.save_game_history('train_x.npy', 'train_y.npy')  # overwrite save game history to training data
             return True
         else:
             return False
@@ -210,7 +208,7 @@ class Game:
         self.graphics.screen.blit(text, text_rect)
         pygame.display.flip()
 
-        pygame.time.delay(3000)  # Delay for 3 seconds
+        pygame.time.delay(3000)  # Delay for 3 seconds, so that the pygame won't freeze
 
     def terminate_game(self):
         """Terminates the game."""
@@ -284,14 +282,14 @@ class Game:
             return
         else:
             is_maximizing = self.turn == BROWN
-            best_score, best_move = self.board.alpha_beta(3, is_maximizing, self.board)
+            best_score, best_move = self.board.alpha_beta(3, is_maximizing, self.board)    # alpha-beta depth is set here.
 
         return best_move
 
-    def is_capture_move(self, start, end):
+    def is_capture_move(self, start, end):  #checks if its a capture move
         return abs(start[0] - end[0]) > 1 or abs(start[1] - end[1]) > 1
 
-    def count_captures(self, start, end):
+    def count_captures(self, start, end):  # counting the max capture number
         captures = 0
         current = start
         while current != end:
@@ -520,7 +518,7 @@ class Board:
 
     def adjacent(self, pixel):
         """
-        Returns a list of squares locations that are adjacent (on a diagonal) to (x,y).
+        Returns a list of squares locations that are adjacent to (x,y).
         """
         x = pixel[0]
         y = pixel[1]
@@ -641,7 +639,7 @@ class Board:
                     self.location((x, y)).occupant.color == BROWN and y == 7):
                 self.location((x, y)).occupant.king = True
 
-    """" this is added to the board class because when saving game history in generate_random_training_data2 it is used
+    """" this BELOW is added to the board class because when saving game history in generate_random_training_data it is used
        the old evaluation function instead of cnn so that is why to not get an error I added this function to the code 
        but if needed this can be removed with the save_game_history function  !!!  IT IS NOT USED IN ANY PLACE OF THE 
        CODE EXCEPT IT IS USED FOR SAVING GAME HISTORY SO CNN IS THE ONLY SOLUTION FOR HEURISTIC EVALUATION !!!  """
@@ -784,18 +782,21 @@ class Board:
 
         return best_score, best_move
 
+    # Create a deep copy of the current board
     def clone(self):
         new_object = Board()
         new_object.matrix = self.clone_matrix()
 
         return new_object
 
+    # Create a deep copy of the board matrix
     def clone_matrix(self):
         new_matrix = []
 
         for column_index in range(len(self.matrix)):
             row = []
             for row_index in range(len(self.matrix[column_index])):
+                # Clone each square individually
                 row.append(self.matrix[column_index][row_index].clone())
             new_matrix.append(row)
 

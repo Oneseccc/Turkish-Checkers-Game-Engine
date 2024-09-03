@@ -4,14 +4,14 @@
     NOTES ARE TAKEN IN HERE ABOUT THE GAME
 
     1ST TIME TRAINED CNN VS ALPHA-BETA RESULTS (random):
-    GAMES PLAYED : 25, 5
-    WHITE WINS : 12, 4
-    BLACK WINS : 13, 1
+    GAMES PLAYED : 30
+    WHITE WINS : 16
+    BLACK WINS : 14
 
     2ND TIME TRAINED CNN VS ALPHA-BETA RESULTS (normal):
-    GAMES PLAYED : 25, 5
-    WHITE WINS : 13, 4
-    BLACK WINS : 12, 1
+    GAMES PLAYED : 30
+    WHITE WINS : 17
+    BLACK WINS : 13
 
 
 
@@ -20,8 +20,6 @@
 
 import os
 import multiprocessing as mp
-import time
-
 import keras
 import pygame, sys
 from pygame.locals import *
@@ -119,18 +117,6 @@ class Game:
         else:
             self.end_turn()
 
-    def make_random_move(self):
-        possible_moves = []
-        for x in range(8):
-            for y in range(8):
-                if self.board.matrix[x][y].occupant is not None and self.board.matrix[x][y].occupant.color == self.turn:
-                    moves = self.board.legal_moves((x, y))
-                    for move in moves:
-                        possible_moves.append(((x, y), move))
-
-        if possible_moves:
-            return random.choice(possible_moves)
-        return None
 
     def update(self):
         """Calls on the graphics class to update the game display."""
@@ -309,7 +295,7 @@ class Game:
 
             # If the same move has occurred 3 times with CNN enabled, game ends as draw
             if self.same_move_count >= 3:
-                self.is_draw = 0
+                self.is_draw = True
 
                 # Update move history
                 self.second_last_move = self.last_move  # Move the last move to the second last position
@@ -742,7 +728,7 @@ class Board:
 
     def evaluate_move(self, board_states, use_cnn: bool):
         if use_cnn:
-            # Ensure board_states has shape (n, 8, 8, 1)
+            # Ensure board_states has shape (n, 8, 8, 1), n = leaf number
             board_states = np.expand_dims(board_states, axis=-1)
             return RANDOM_MODEL.predict(board_states)
 
@@ -788,7 +774,7 @@ class Board:
                 color = BROWN
             else:
                 color = BEIGE
-        all_board_states = []
+        all_board_states = []  #for all leaf nodes
         all_legal_moves = []
         scores = []
 

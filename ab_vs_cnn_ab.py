@@ -60,7 +60,7 @@ class Game:
         self.board = Board()
         self.turn = BEIGE
         self.selected_piece = None  # a board location.
-        self.hop = False
+        self.hop = False  # multiple captures
         self.selected_legal_moves = []
         self.board_history = []  # x
         self.move_score_history = []  # y
@@ -303,8 +303,8 @@ class Game:
             print("Same movement detected")
             self.same_move_count += 1
 
-            # If the same move has occurred 2 times with CNN enabled, make a random move
-            if self.same_move_count >= 1:
+            # If the same move has occurred 3 times with CNN enabled, make a random move
+            if self.same_move_count >= 3:
                 best_move = self.make_random_move()
                 self.same_move_count = 0  # Reset the counter after making a random move
 
@@ -860,7 +860,7 @@ class Square:
 
 def main():
     game = Game()
-    game.main(epochs=44, delay_between_games=1)  # Run for 10 epochs with a 3-second delay between games
+    game.main(epochs=5, delay_between_games=1)  # Run for 10 epochs with a 3-second delay between games
 
 
 if __name__ == "__main__":

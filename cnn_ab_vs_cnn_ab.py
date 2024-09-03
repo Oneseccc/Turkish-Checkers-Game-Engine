@@ -3,12 +3,11 @@
 """
     NOTES ARE TAKEN IN HERE ABOUT THE GAME
 
-    1ST TIME TRAINED CNN VS ALPHA-BETA RESULTS:
-    GAMES PLAYED : 10 , 10
-    BEIGE WINS : 5 , 6
-    BROWN WINS : 5 , 4
+    TRAINED CNN VS CNN RESULTS:
+    GAMES PLAYED : 5, 10, 10, 5              || bonus games (just to test) 3, 7
+    BEIGE WINS (normal) : 4 , 6, 4, 4 60%    || bonus runs  3, 4
+    BROWN WINS (random) : 1 , 4, 6, 1  40%   || bonus runs  0, 3
 
-    2ND TIME TRAINED CNN VS ALPHA-BETA RESULTS:
 
 
 """
@@ -114,19 +113,6 @@ class Game:
             self.selected_piece = move[1]
         else:
             self.end_turn()
-
-    def make_random_move(self):
-        possible_moves = []
-        for x in range(8):
-            for y in range(8):
-                if self.board.matrix[x][y].occupant is not None and self.board.matrix[x][y].occupant.color == self.turn:
-                    moves = self.board.legal_moves((x, y))
-                    for move in moves:
-                        possible_moves.append(((x, y), move))
-
-        if possible_moves:
-            return random.choice(possible_moves)
-        return None
 
     def update(self):
         """Calls on the graphics class to update the game display."""
@@ -304,7 +290,7 @@ class Game:
 
         # last_move = self.random_cnn_last_move if use_random_cnn else self.normal_cnn_last_move
         # Check if the best move is the same as the move two turns ago and use_cnn is True
-        last_move = self.random_cnn_last_move if not use_random_cnn else self.normal_cnn_last_move
+        last_move = self.random_cnn_last_move if use_random_cnn else self.normal_cnn_last_move
         if best_move[0] == last_move[1] and best_move[1] == last_move[0]:
             print("Same movement detected")
             self.same_move_count += 1
@@ -455,7 +441,6 @@ class Board:
         """
 
         # initialize squares and place them in matrix
-
         matrix = [[None] * 8 for i in range(8)]
 
         # The following code block has been adapted from
@@ -472,7 +457,6 @@ class Board:
                     matrix[y][x] = Square(BLACK)
 
         # initialize the pieces and put them in the appropriate squares
-
         for x in range(8):
             for y in range(1, 3):
                 matrix[x][y].occupant = Piece(BROWN)
@@ -868,7 +852,7 @@ class Square:
 
 def main():
     game = Game()
-    game.main(epochs=25, delay_between_games=1)  # Run for 10 epochs with a 3-second delay between games
+    game.main(epochs=5, delay_between_games=1)  # Run for 10 epochs with a 3-second delay between games
 
 
 if __name__ == "__main__":
