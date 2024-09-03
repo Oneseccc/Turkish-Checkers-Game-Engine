@@ -2,7 +2,7 @@ Turkish Checkers Game Engine Developed for Bachelors Thesis.
 
 ==========================================================================
 
-Minor parts are taken for this bachelor thesis project and accordingly changes are made to be able to make it work for Turkish Checkers game. All of the AI related codes are developed and implemented by me and nothing is taken, only the GUI and some game environment related parts are taken/changed.
+This project implements a Turkish Checkers game engine, including all AI-related code, which was developed entirely by the author. The graphical user interface (GUI) and some game environment components were adapted from an existing Pygame Checkers project.
 
 Some of the game environment parts are taken from GitHub User: everestwitman
 https://github.com/everestwitman/Pygame-Checkers/blob/master/checkers.py
