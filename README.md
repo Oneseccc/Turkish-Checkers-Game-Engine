@@ -10,11 +10,15 @@ https://github.com/everestwitman/Pygame-Checkers/blob/master/checkers.py
 Parts taken (detailed information can be found in my thesis work appendix 1): 
 
 GUI (Minor changes are made).
-few parts from Class Graphic (Major changes made).
-few parts from Class Game (Major changes made).
-few parts from Class Board (Major changes made).
+
+Few parts from Class Graphic (Major changes made).
+
+Few parts from Class Game (Major changes made).
+
+Few parts from Class Board (Major changes made).
 
 Even though the most of the namings can be same/similar most of the code inside is changed due to the games are not the same and it was not compatible with Turkish Checkers Game piece number, movement and other specific rules.
+
 It is only used as starting point but major changes are made to be able to implement the Turkish Checkers Game engine and its AI players/Hybrid solution.
 
 
