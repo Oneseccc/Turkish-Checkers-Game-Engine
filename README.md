@@ -8,6 +8,7 @@ Some of the game environment parts are taken from GitHub User: everestwitman
 https://github.com/everestwitman/Pygame-Checkers/blob/master/checkers.py
 
 Parts taken (detailed information can be found in my thesis work appendix 1): 
+
 GUI (Minor changes are made).
 few parts from Class Graphic (Major changes made).
 few parts from Class Game (Major changes made).
